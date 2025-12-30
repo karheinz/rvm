@@ -347,6 +347,26 @@ __rvm_setup_sudo_function_Solaris()
   fi
 }
 
+__rvm_setup_sudo_function_OpenBSD()
+{
+  if
+    __rvm_which doas &>/dev/null
+  then
+    __rvm_sudo()
+    {
+      if [[ $1 == "-p" ]]; then
+        shift 2
+      fi
+      doas "$@"
+    }
+  else
+    __rvm_sudo()
+    {
+      sudo "$@"
+    }
+  fi
+}
+
 __rvm_setup_sudo_function_Other()
 {
   if
